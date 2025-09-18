@@ -1,0 +1,71 @@
+.navigator {
+  display: flex;
+  flex-direction: column;
+  padding: 0 80px;
+  gap: 20px;
+
+  @media (max-width: 1100px) {
+    gap: 10px;
+    padding: 0;
+  }
+}
+
+.buttons {
+  display: flex;
+  gap: 20px;
+
+  @media (max-width: 1100px) {
+    gap: 8px;
+  }
+}
+
+.navButton {
+  width: 50px;
+  height: 50px;
+  border: 1px solid #42567a;
+  border-radius: 50%;
+  background: none;
+  cursor: pointer;
+  position: relative;
+  transition: background 0.2s;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid #42567a;
+    border-bottom: 2px solid #42567a;
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+
+  @media (max-width: 1100px) {
+    width: 25px;
+    height: 25px;
+
+    &::before {
+      width: 4px;
+      height: 4px;
+    }
+  }
+}
+
+.prev::before {
+  transform: translate(-50%, -50%) rotate(135deg);
+}
+
+.next::before {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.counter {
+  font-size: 14px;
+  color: #42567a;
+}

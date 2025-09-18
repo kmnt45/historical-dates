@@ -1,0 +1,27 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "node": true
+  },
+  "extends": [
+    "react-app",
+    "react-app/jest",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:jsx-a11y/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": ["react", "@typescript-eslint", "prettier"],
+  "rules": {
+    "prettier/prettier": ["error", { "singleQuote": true, "trailingComma": "all", "semi": true }],
+    "react/react-in-jsx-scope": "off",
+    "quotes": ["error", "single", { "avoidEscape": true }],
+    "@typescript-eslint/quotes": ["error", "single", { "avoidEscape": true }]
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  }
+}
