@@ -20,11 +20,21 @@ export const TimeCircle: FC<TimeCircleProps> = ({ segments, activeSegment, onSeg
 
   const radius = 265;
 
-  const calculatePointPosition = useCallback((index: number): PointCoordinates => {
-    const angle = (Math.PI / 3) * index - Math.PI / 3;
+  const calculatePointPosition = useCallback(
+    (index: number): PointCoordinates => {
+      const anglePerSegment = (2 * Math.PI) / segments.length;
 
-    return { x: radius * Math.cos(angle), y: radius * Math.sin(angle) };
-  }, []);
+      const angleOffset = -Math.PI / 3;
+
+      const angle = anglePerSegment * index + angleOffset;
+
+      return {
+        x: radius * Math.cos(angle),
+        y: radius * Math.sin(angle),
+      };
+    },
+    [segments.length],
+  );
 
   const pointPositions = useMemo(
     () => segments.map((_, i) => calculatePointPosition(i)),
