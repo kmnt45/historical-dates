@@ -1,3 +1,5 @@
+@import '../../variables.scss';
+
 .navigator {
   display: flex;
   flex-direction: column;
@@ -7,6 +9,7 @@
   @media (max-width: 1100px) {
     gap: 10px;
     padding: 0;
+    justify-self: start;
   }
 }
 
@@ -22,7 +25,7 @@
 .navButton {
   width: 50px;
   height: 50px;
-  border: 1px solid #42567a;
+  border: 1px solid $color-dark;
   border-radius: 50%;
   background: none;
   cursor: pointer;
@@ -41,8 +44,8 @@
     left: 50%;
     width: 8px;
     height: 8px;
-    border-right: 2px solid #42567a;
-    border-bottom: 2px solid #42567a;
+    border-right: 2px solid $color-dark;
+    border-bottom: 2px solid $color-dark;
     transform: translate(-50%, -50%) rotate(45deg);
   }
 
@@ -67,5 +70,5 @@
 
 .counter {
   font-size: 14px;
-  color: #42567a;
+  color: $color-dark;
 }

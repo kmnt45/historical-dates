@@ -81,8 +81,8 @@ export const EventsSlider: FC<EventsSliderProps> = ({ events, activeSegment, dat
         }
       >
         {events.map((event, index) => (
-          <SwiperSlide key={`${event.id ?? index}-${index}`} className={styles.slide}>
-            <div className={styles.event}>
+          <SwiperSlide key={`${event.id ?? index}-${index}`}>
+            <div>
               <h4 className={styles.date}>{event.date}</h4>
               <p className={styles.description}>{event.description}</p>
             </div>

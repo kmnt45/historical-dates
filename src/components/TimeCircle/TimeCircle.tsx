@@ -18,6 +18,8 @@ export const TimeCircle: FC<TimeCircleProps> = ({ segments, activeSegment, onSeg
 
   const [dates, setDates] = useState({ start: 0, end: 0 });
 
+  const [showTitle, setShowTitle] = useState(false);
+
   const radius = 265;
 
   const calculatePointPosition = useCallback(
@@ -82,21 +84,20 @@ export const TimeCircle: FC<TimeCircleProps> = ({ segments, activeSegment, onSeg
 
       animateDate(dates.end, segmentDates.end, 'end');
 
+      setShowTitle(false);
+
       gsap.to(currentRotation, {
         current: finalRotation,
         duration: 1,
         ease: 'power2.inOut',
         onUpdate: () => {
           gsap.set(pointsWrapperRef.current, { rotation: currentRotation.current });
-
-          const rotateElements = (selector: string) =>
-            gsap.utils
-              .toArray<HTMLElement>(selector)
-              .forEach((el) => gsap.set(el, { rotation: -currentRotation.current }));
-
-          rotateElements(`.${styles.segmentNumber}`);
-
-          rotateElements(`.${styles.segmentTitle}`);
+          gsap.utils
+            .toArray<HTMLElement>(`.${styles.segmentNumber}`)
+            .forEach((el) => gsap.set(el, { rotation: -currentRotation.current }));
+        },
+        onComplete: () => {
+          setShowTitle(true);
         },
       });
     },
@@ -131,37 +132,28 @@ export const TimeCircle: FC<TimeCircleProps> = ({ segments, activeSegment, onSeg
 
           const isActive = index === activeSegment;
 
-          return (
-            <React.Fragment key={segment.id}>
-              <button
-                className={`${styles.point} ${isActive ? styles.active : ''}`}
-                style={{
-                  left: `calc(50% + ${position.x}px)`,
-                  top: `calc(50% + ${position.y}px)`,
-                  transform: 'translate(-50%, -50%)',
-                }}
-                onClick={() => onSegmentChange(index)}
-              >
-                <span className={styles.pointInner} />
-                <span className={styles.segmentNumber}>{index + 1}</span>
-              </button>
+          const pointIsActiveStyle = isActive ? styles.active : '';
 
-              {isActive && (
-                <span
-                  className={styles.segmentTitle}
-                  style={{
-                    left: `calc(50% + ${position.x + 50}px)`,
-                    top: `calc(50% + ${position.y}px)`,
-                    transform: 'translateY(-50%)',
-                  }}
-                >
-                  {segment.title}
-                </span>
-              )}
-            </React.Fragment>
+          const segmentNumber = index + 1;
+
+          return (
+            <button
+              key={segment.id}
+              className={`${styles.point} ${pointIsActiveStyle}`}
+              style={{
+                left: `calc(50% + ${position.x}px)`,
+                top: `calc(50% + ${position.y}px)`,
+                transform: 'translate(-50%, -50%)',
+              }}
+              onClick={() => onSegmentChange(index)}
+            >
+              <span className={styles.pointInner} />
+              <span className={styles.segmentNumber}>{segmentNumber}</span>
+            </button>
           );
         })}
       </div>
+      {showTitle && <div className={styles.staticTitle}>{segments[activeSegment].title}</div>}
     </div>
   );
 };
